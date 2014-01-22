@@ -69,7 +69,6 @@ class Player(pygame.sprite.Sprite):
             self.fall = True
 
     def update(self, dt):
-        print self.rect.x, self.rect.y
         mx , my = pygame.mouse.get_pos()
         keys = self.game.keys_pressed
         self.dx = 0
