@@ -73,15 +73,15 @@ class Player(pygame.sprite.Sprite):
         keys = self.game.keys_pressed
         self.dx = 0
         self.dy = self.jump_power*dt
-    
+        #Update keypresses
         if 1 in keys:
             if keys[K_d]:
                  self.dx += self.speed*dt
             if keys[K_a]:
                  self.dx -= self.speed*dt
-                 
+        #Collision, get where player should be              
         self.get_position(self.game.solids)
-
+        #Jumping
         if self.fall:
             self.jump_power += GRAV*dt
         else:
