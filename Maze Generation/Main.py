@@ -18,6 +18,7 @@ class Node(pygame.sprite.Sprite):
         self.color = color
 
         self.knocked = 0
+        self.solver_on = False
 
         self.image = pygame.Surface([10, 10])
         self.image.fill(0)
@@ -41,7 +42,7 @@ class Node(pygame.sprite.Sprite):
             index = self.num + n[1]
             if 2400 > index >= 0:
                 cur_n = self.game.node_list[n[1] + self.num]
-                if self.rect.x == 0 and n[0] == 'west' or self.rect.x == 590 and n[0] == 'east':
+                if self.rect.x == 10 and n[0] == 'west' or self.rect.x == 600 and n[0] == 'east':
                     #Had to hadrcode come messiness to make sure neighbors were made properly 
                     pass
                 else:
@@ -84,6 +85,10 @@ class Node(pygame.sprite.Sprite):
     def update(self):
         for points in self.point_list.values():
             pygame.draw.line(self.game.screen, self.color, points[0], points[1], 1)
+        if self.game.solver_on == self:
+            self.image.fill((0, 255, 0))
+        else:
+            self.image.fill((0))
 
 class Maze():
     def __init__(self):
@@ -91,17 +96,22 @@ class Maze():
 
         self.clock = pygame.time.Clock()
 
-        self.screen_res = [601, 431]
+        self.screen_res = [621, 461]
         self.screen = pygame.display.set_mode(self.screen_res, pygame.HWSURFACE, 32)
 
         self.node_sprites = pygame.sprite.Group()
         self.node_list = []
+
+        self.timer = [0]*3
+        self.timer_on = False
 
         self.directions = "Press space to generate maze, press space again to generate new maze!"
         self.font = pygame.font.SysFont("Calibri", 16)
 
         self.renderText()
         self.createGrid()
+
+        self.solver_on = self.node_list[0]
 
         while 1:
             self.Loop()
@@ -119,13 +129,17 @@ class Maze():
         self.createGrid()
         self.createMaze()
 
+        self.solver_on = self.node_list[0]
+        self.timer = [0]*3
+        self.timer_on = False
+
     def renderText(self):
         self.d_text = self.font.render(self.directions, 1, (255, 255, 255))
         self.t_size = self.font.size(self.directions)
 
     def createGrid(self):
-        col = 30
-        row = 0
+        col = 50
+        row = 10
         num = 0
 
         color  = [random.choice(xrange(255)), random.choice(xrange(255)), random.choice(xrange(255))]
@@ -135,7 +149,7 @@ class Maze():
                 Node(self, [row, col], num, color)
                 row += 10
                 num += 1
-            row = 0
+            row = 10
             col += 10
 
         for node in self.node_list:
@@ -186,10 +200,33 @@ class Maze():
 
 
     def eventLoop(self):
+        dire = None
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == pygame.K_UP:
+                    dire = 'north'
+                if event.key == pygame.K_DOWN:
+                    dire = 'south'
+                if event.key == pygame.K_LEFT:
+                    dire = 'west'
+                if event.key == pygame.K_RIGHT:
+                    dire = 'east'
+        if self.solver_on != self.node_list[0]:
+            self.timer_on = True
+
+        if dire:
+            if not self.solver_on.checkWall(dire):
+                try:
+                    new = self.solver_on.neighbors[dire]
+                    self.solver_on = new
+                    dire = None
+                    if new == self.node_list[-1]:
+                        self.timer_on = False
+                except:
+                    pass
 
 
     def Tick(self):
@@ -197,8 +234,26 @@ class Maze():
         if self.keys_pressed[pygame.K_SPACE]:
             self.reset()
 
+        if self.timer_on:
+            self.timer[2] += self.clock.tick(60)/10
+            if self.timer[2] >= 100:
+                self.timer[1] += 1
+                self.timer[2] = 0
+
+            if self.timer[1] >= 60:
+                self.timer[0] += 1
+                self.timer[1] = 0
+        else:
+            pass
+
+
+
+
+
     def Draw(self):
         self.screen.fill(0)
+        timelabel = self.font.render("{}:{}:{}".format(*self.timer), 1, (255, 255, 255))
+        self.screen.blit(timelabel, (265, 26))
 
         self.screen.blit(self.d_text, (300 - self.t_size[0]/2, 8))
 
