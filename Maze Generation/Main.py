@@ -19,6 +19,7 @@ class Node(pygame.sprite.Sprite):
 
         self.knocked = 0
         self.solver_on = False
+        self.checked = False
 
         self.image = pygame.Surface([10, 10])
         self.image.fill(0)
@@ -87,6 +88,8 @@ class Node(pygame.sprite.Sprite):
             pygame.draw.line(self.game.screen, self.color, points[0], points[1], 1)
         if self.game.solver_on == self:
             self.image.fill((0, 255, 0))
+        elif self.checked:
+            self.image.fill((0, 0, 255))
         else:
             self.image.fill((0))
 
@@ -164,7 +167,6 @@ class Maze():
         visited = 1
 
         for i in xrange(4000):
-            current.checked = True
             try:
                 neighbors = []
                 for key, value in current.neighbors.iteritems():
@@ -214,12 +216,13 @@ class Maze():
                     dire = 'west'
                 if event.key == pygame.K_RIGHT:
                     dire = 'east'
-        if self.solver_on != self.node_list[0]:
+        if self.solver_on != self.node_list[0] and self.solver_on != self.node_list[-1]:
             self.timer_on = True
 
         if dire:
             if not self.solver_on.checkWall(dire):
                 try:
+                    self.solver_on.checked = True
                     new = self.solver_on.neighbors[dire]
                     self.solver_on = new
                     dire = None
