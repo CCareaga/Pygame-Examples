@@ -166,7 +166,7 @@ class Maze():
         current = self.node_list[0]
         visited = 1
 
-        for i in xrange(4000):
+        for i in xrange(3600):
             try:
                 neighbors = []
                 for key, value in current.neighbors.iteritems():
@@ -200,7 +200,6 @@ class Maze():
                             continue
                 break   
 
-
     def eventLoop(self):
         dire = None
         for event in pygame.event.get():
@@ -216,6 +215,7 @@ class Maze():
                     dire = 'west'
                 if event.key == pygame.K_RIGHT:
                     dire = 'east'
+
         if self.solver_on != self.node_list[0] and self.solver_on != self.node_list[-1]:
             self.timer_on = True
 
@@ -230,12 +230,13 @@ class Maze():
                         self.timer_on = False
                 except:
                     pass
-
-
+            
     def Tick(self):
         self.keys_pressed = pygame.key.get_pressed()
         if self.keys_pressed[pygame.K_SPACE]:
             self.reset()
+        if self.keys_pressed[pygame.K_RETURN]:
+            self.solver()
 
         if self.timer_on:
             self.timer[2] += self.clock.tick(60)/10
@@ -248,10 +249,6 @@ class Maze():
                 self.timer[1] = 0
         else:
             pass
-
-
-
-
 
     def Draw(self):
         self.screen.fill(0)

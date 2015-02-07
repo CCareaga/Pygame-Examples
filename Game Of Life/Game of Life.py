@@ -1,5 +1,5 @@
 import pygame
-import pygame._view
+
 from pygame.locals import *
 import sys
 import random
