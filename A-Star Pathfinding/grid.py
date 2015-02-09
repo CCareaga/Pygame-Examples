@@ -13,16 +13,19 @@ class Grid:
             for node in col:
                 node.update()
                 node.draw(self.game.screen)
+
         for i in xrange(self.length):
-            pygame.draw.line(self.game.screen, [255]*3, (15*i, 45), (15*i, 495))
+            pygame.draw.line(self.game.screen, [100]*3, (15*i, 45), (15*i, 495))
 
         for i in xrange(self.width):
-            pygame.draw.line(self.game.screen, [255]*3, (0, (15*i)+45), (750, (15*i)+45))
+            pygame.draw.line(self.game.screen, [100]*3, (0, (15*i)+45), (750, (15*i)+45))
 
     def clearPath(self):
         for col in self.nodes:
             for node in col:
-                node.in_path = False
+                if node.in_path:
+                    node.in_path = False
+                    node.color = 0
 
 class Node():
     def __init__(self, grid, pos):

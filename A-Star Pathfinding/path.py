@@ -51,7 +51,8 @@ class Game():
                 self.grid.nodes[pos[0]][pos[1]].in_path = True
         else:
             pass
-
+        
+        print len(path)
         self.pathing = False 
 
     def Clear(self):
