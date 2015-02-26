@@ -8,7 +8,7 @@ import random
 from player import Player
 from block import Block
 from maploader import MapLoader
-from camera import Layer
+from camera import *
 
 pygame.init()
 

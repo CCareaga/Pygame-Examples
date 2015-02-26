@@ -47,6 +47,8 @@ class Node():
     def update(self):
         if self.checked and self.game.show_checked:
             self.color = [0, 255, 0]
+        if self.checked and self.game.show_checked == False:
+            self.color = [0, 0, 0]
 
         if self.in_path:
             self.color = [0, 0, 255]

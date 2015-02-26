@@ -4,7 +4,7 @@ import os
 
 from block import Block
 from player import Player
-from camera import Camera, Layer
+from camera import Layer, Camera
 
 class MapLoader():
     def __init__(self, game):
