@@ -22,7 +22,7 @@ class GUI(Frame):
         self.b2 = Button(self, "Toggle Random", self.command2, position=(5,40))
         self.b3 = Button(self, "Toggle Shape", self.command3, position=(5, 75))
 
-        self.c_Label = Label(self, "True", position=(135, 10))
+        self.c_Label = Label(self, "False", position=(135, 10))
         self.r_Label = Label(self, "True", position=(135, 45))
         self.s_Label = Label(self, "Random", position=(135, 80))
 
@@ -52,14 +52,15 @@ class GUI(Frame):
             self.s_Label.text = 'Circle'
             self.game.random = False
         else:
-            self.game.random = True
             self.s_Label.text = 'Random'
+            self.game.random = True
 
         self.r_Label.text = str(self.game.random)
 
     def command3(self):
-        if self.game.attrs['shape'] == 'circle':
-            self.s_Label.text = 'Rect'
-        else:
-            self.s_Label.text = 'Circle'
+        if not self.game.random:
+            if self.game.attrs['shape'] == 'circle':
+                self.s_Label.text = 'Rect'
+            else:
+                self.s_Label.text = 'Circle'
 

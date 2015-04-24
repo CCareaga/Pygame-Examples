@@ -26,8 +26,8 @@ class Example():
 		self.GUI = GUI(self.screen, self)
 
 		self.attrs = {'shape' : 'circle',
-					  'size': 4,
-					  'density' : 5,
+					  'size': 6,
+					  'density' : 6,
 					  'speed' : 6}
 
 		self.defaults = self.attrs # save starting values
