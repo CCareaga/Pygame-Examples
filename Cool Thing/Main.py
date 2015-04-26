@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import sys
 import random, math
+import time
 
 pygame.init()
 
@@ -12,13 +13,14 @@ class Game():
 
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
-        self.screen_res = [740, 490]
+        self.screen_res = [640, 480]
 
         self.circles = []
 
-        self.screen = pygame.display.set_mode(self.screen_res, pygame.FULLSCREEN, 32)
+        self.screen = pygame.display.set_mode(self.screen_res, pygame.HWSURFACE, 32)
 
         self.createCircles()
+        time.sleep(6)
      
         while 1:
             self.Loop()
@@ -32,8 +34,8 @@ class Game():
 
     def createCircles(self):
         #circle item format: [pos, vector]
-        for i in xrange(75):
-            pos = [370, 245]
+        for i in xrange(100):
+            pos = [320, 240]
             vector = self.getVector()
             self.circles.append([pos, vector])
 
@@ -41,7 +43,7 @@ class Game():
         return math.sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)
 
     def getVector(self):
-        speed = 30
+        speed = 5
         
         distance = [random.randrange(-40,40)/10.0, random.randrange(-40,40)/10.0]
 
@@ -71,23 +73,29 @@ class Game():
         self.screen.fill(0)
 
         for circle in self.circles:
-            circle[0] = [int(circle[0][0]), int(circle[0][1])]
+            #circle[0] = [int(circle[0][0]), int(circle[0][1])]
 
-            pygame.draw.circle(self.screen, [255]*3, circle[0], 0)
+            #pygame.draw.circle(self.screen, [255]*3, circle[0], 0)
             circle[0][0] += circle[1][0]
             circle[0][1] += circle[1][1]
             
-            if circle[0][0] > 740 or circle[0][0] < 0:
+            if circle[0][0] > 640 or circle[0][0] < 0:
                 circle[1][0] *= -1
 
-            elif circle[0][1] > 490 or circle[0][1] < 0:
+            elif circle[0][1] > 480 or circle[0][1] < 0:
                 circle[1][1] *= -1
 
             for c in self.circles:
-                if self.getDistance(circle[0], c[0]) < 200:
+                if self.getDistance(circle[0], c[0]) < 225:
                     pygame.draw.line(self.screen, [0, 255, 0], circle[0], c[0])
-                if self.getDistance(circle[0], c[0]) < 150:
+                if self.getDistance(circle[0], c[0]) < 200:
                     pygame.draw.line(self.screen, [0, 0, 255], circle[0], c[0])
-                if self.getDistance(circle[0], c[0]) < 100:
+                if self.getDistance(circle[0], c[0]) < 175:
                     pygame.draw.line(self.screen, [255, 0, 0], circle[0], c[0])
+                #if self.getDistance(circle[0], c[0]) < 150:
+                    #pygame.draw.line(self.screen, [0, 255, 255], circle[0], c[0])
+                #if self.getDistance(circle[0], c[0]) < 125:
+                    #pygame.draw.line(self.screen, [255, 255, 0], circle[0], c[0])
+                #if self.getDistance(circle[0], c[0]) < 100:
+                    #pygame.draw.line(self.screen, [255, 0, 255], circle[0], c[0])
 Game()

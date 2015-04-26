@@ -1,10 +1,10 @@
 from pygame.locals import *
 import pygame
-import os
-
+import os, sys
+sys.path.append('src')
 from block import Block
 from player import Player
-from camera import Layer, Camera
+from cam import *
 
 class MapLoader():
     def __init__(self, game):
