@@ -48,7 +48,6 @@ class MapLoader():
             
         self.game.entities.add(self.game.solids)
         
-            
         total_level_width  = len(level[0])*25
         total_level_height = len(level)*25
         self.camera = Camera(self.complex_camera, total_level_width, total_level_height)

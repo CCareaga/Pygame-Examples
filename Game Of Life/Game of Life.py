@@ -11,10 +11,8 @@ pygame.init()
 
 class Game():
     def __init__(self):
-        #window setup
         pygame.display.set_caption('Game Of Life')
 
-        # initiate the clock and screen
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [740, 490]
@@ -98,7 +96,6 @@ class Game():
                     self.cells = []
                     self.createGrid()
 
-
     def Tick(self):
         # updates to player location and animation frame
         self.ttime = self.clock.tick()
@@ -110,7 +107,6 @@ class Game():
         else:
             self.generation = 0
             self.population = 0
-
 
     def Draw(self):
         self.screen.fill(0)

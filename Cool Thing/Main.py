@@ -9,7 +9,7 @@ pygame.init()
 
 class Game():
     def __init__(self):
-        pygame.display.set_caption('Cool Shit!')
+        pygame.display.set_caption('Cool Lines')
 
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
@@ -20,7 +20,6 @@ class Game():
         self.screen = pygame.display.set_mode(self.screen_res, pygame.HWSURFACE, 32)
 
         self.createCircles()
-        time.sleep(6)
      
         while 1:
             self.Loop()
@@ -44,7 +43,6 @@ class Game():
 
     def getVector(self):
         speed = 5
-        
         distance = [random.randrange(-40,40)/10.0, random.randrange(-40,40)/10.0]
 
         try:
@@ -73,9 +71,6 @@ class Game():
         self.screen.fill(0)
 
         for circle in self.circles:
-            #circle[0] = [int(circle[0][0]), int(circle[0][1])]
-
-            #pygame.draw.circle(self.screen, [255]*3, circle[0], 0)
             circle[0][0] += circle[1][0]
             circle[0][1] += circle[1][1]
             
@@ -92,10 +87,4 @@ class Game():
                     pygame.draw.line(self.screen, [0, 0, 255], circle[0], c[0])
                 if self.getDistance(circle[0], c[0]) < 175:
                     pygame.draw.line(self.screen, [255, 0, 0], circle[0], c[0])
-                #if self.getDistance(circle[0], c[0]) < 150:
-                    #pygame.draw.line(self.screen, [0, 255, 255], circle[0], c[0])
-                #if self.getDistance(circle[0], c[0]) < 125:
-                    #pygame.draw.line(self.screen, [255, 255, 0], circle[0], c[0])
-                #if self.getDistance(circle[0], c[0]) < 100:
-                    #pygame.draw.line(self.screen, [255, 0, 255], circle[0], c[0])
 Game()

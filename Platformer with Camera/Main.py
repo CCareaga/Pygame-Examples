@@ -2,8 +2,9 @@ import pygame
 
 from pygame.locals import *
 import sys
-sys.path.append('src')
 import random
+
+sys.path.append('src')
 
 from player import Player
 from block import Block
@@ -14,10 +15,9 @@ pygame.init()
 
 class Game():
     def __init__(self):
-        #window setup
+
         pygame.display.set_caption('Platformer')
 
-        # initiate the clock and screen
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
