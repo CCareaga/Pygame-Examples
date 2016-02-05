@@ -1,7 +1,7 @@
 # Pygame-Examples
 Collection of miscellaneous Python projects using the Pygame library.
 
-### A-Start Pathfinding Demo
+### A-Star Pathfinding Demo
 - A demonstartion of the A* pathfinding algorithm to find shortest path between point A & B on a grid while also avoiding obstacles.
 - [More info on A*](http://www.policyalmanac.org/games/aStarTutorial.htm)
 
